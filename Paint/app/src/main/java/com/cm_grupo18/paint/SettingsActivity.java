@@ -24,6 +24,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
     private static float OFFSET = 8.0f * 10; //10 just seems to work
     private int progress_status = 100;
     int new_background_color;
+    int new_brush_color;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +60,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                 break;
             case R.id.save_button:
                 PaintActivity.background = new_background_color;
-
+                PaintView.brushcolor = new_brush_color;
                 super.onBackPressed();
                 break;
             default:
@@ -120,9 +121,14 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                 g = 255;
                 b = 255;
             }
+            if(R.id.pen_color == seekBar.getId()){
+                new_brush_color = Color.argb(255,r,g,b);
+                progress_status = progress;
+            }else{
+                new_background_color = Color.argb(255, r, g, b);
+                progress_status = progress;
+            }
 
-            new_background_color = Color.argb(255, r, g, b);
-            progress_status = progress;
 
             ImageView imageViewIcon = (ImageView) findViewById(R.id.back_color_preview);
             imageViewIcon.setBackgroundColor(new_background_color);

@@ -2,15 +2,21 @@ package com.cm_grupo18.paint;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Path;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 
 public class PaintActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static int background = Color.argb(255, 255, 255, 255);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +28,9 @@ public class PaintActivity extends AppCompatActivity implements View.OnClickList
 
         Button aboutBtn = findViewById(R.id.about_button);
         aboutBtn.setOnClickListener(this);
+
+       // PaintView paintView = new PaintView(this);
+       // setContentView(paintView);
     }
 
     @Override
