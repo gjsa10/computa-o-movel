@@ -26,14 +26,20 @@ public class PaintActivity extends AppCompatActivity implements View.OnClickList
         Button settingsBtn = findViewById(R.id.settings_button);
         settingsBtn.setOnClickListener(this);
 
+
+
         Button aboutBtn = findViewById(R.id.about_button);
         aboutBtn.setOnClickListener(this);
+
+
 
         /**
          * Manter em comentário funcionade em desenvolvimento!
          */
-        // PaintView paintView = new PaintView(this);
-       // setContentView(paintView);
+
+       // PaintView paintView = findViewById(R.id.paintView);
+        //setContentView(paintView);
+
     }
 
     @Override
