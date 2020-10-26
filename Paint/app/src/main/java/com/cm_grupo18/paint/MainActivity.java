@@ -15,10 +15,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        getSupportActionBar().hide();
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent i = new Intent(MainActivity.this, PaintActivity.class);
+                Intent i = new Intent(MainActivity.this, PaintActivityDrawer.class);
                 startActivity(i);
                 finish();
             }
