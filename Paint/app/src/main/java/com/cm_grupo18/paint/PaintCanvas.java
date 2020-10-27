@@ -17,7 +17,7 @@ public class PaintCanvas extends View implements View.OnTouchListener{
     private Paint paint = new Paint();
     private Path path = new Path();
     private int backGroundColor = Color.WHITE;
-    //private GestureDetector mGestureDetector;
+    private GestureDetector mGestureDetector;
 
     public PaintCanvas(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -28,7 +28,7 @@ public class PaintCanvas extends View implements View.OnTouchListener{
 
     public PaintCanvas(Context context, AttributeSet attrs, GestureDetector mGestureDetector) {
         super(context, attrs);
-        //this.mGestureDetector = mGestureDetector;
+        this.mGestureDetector = mGestureDetector;
         setOnTouchListener(this);
         setBackgroundColor(backGroundColor);
         initPaint();
@@ -46,7 +46,7 @@ public class PaintCanvas extends View implements View.OnTouchListener{
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        //mGestureDetector.onTouchEvent(event);
+        mGestureDetector.onTouchEvent(event);
         return false; // let the event go to the rest of the listeners
     }
 
