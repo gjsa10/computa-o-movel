@@ -12,4 +12,10 @@
         android:layout_height="match_parent"
         android:text="THIS IS THE PALLETE" />
 
+    <Button
+        android:id="@+id/undo_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Undo" />
+
 </FrameLayout>

@@ -1,5 +1,6 @@
 package com.cm_grupo18.paint;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 
@@ -15,6 +16,7 @@ import androidx.appcompat.widget.Toolbar;
 public class PaintActivityDrawer extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
+    private int backgroundColor = Color.WHITE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,5 +50,13 @@ public class PaintActivityDrawer extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    public int getBackgroundColor() {
+        return backgroundColor;
+    }
+
+    public void setBackgroundColor(int color){
+        this.backgroundColor = color;
     }
 }

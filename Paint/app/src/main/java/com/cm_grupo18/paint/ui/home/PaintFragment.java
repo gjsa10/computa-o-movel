@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.cm_grupo18.paint.GestureListener;
+import com.cm_grupo18.paint.PaintActivityDrawer;
 import com.cm_grupo18.paint.PaintCanvas;
 import com.cm_grupo18.paint.R;
 
@@ -36,7 +37,9 @@ public class PaintFragment extends Fragment {
         mGestureDetector.setIsLongpressEnabled(true);
         mGestureDetector.setOnDoubleTapListener(mGestureListener);
 
-        PaintCanvas paintCanvas = new PaintCanvas(getActivity().getBaseContext(), null, mGestureDetector);
+        int bColor = ((PaintActivityDrawer)getActivity()).getBackgroundColor();
+
+        PaintCanvas paintCanvas = new PaintCanvas(getActivity().getBaseContext(), null, mGestureDetector, bColor);
         mGestureListener.setCanvas(paintCanvas);
 
         RelativeLayout relativeLayout = rootView.findViewById(R.id.paint_frag_layout);

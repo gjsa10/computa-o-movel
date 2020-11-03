@@ -1,5 +1,6 @@
 package com.cm_grupo18.paint.ui.settings;
 
+import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Point;
 import android.graphics.Shader;
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -20,32 +22,44 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.cm_grupo18.paint.PaintActivityDrawer;
 import com.cm_grupo18.paint.R;
+import com.google.android.material.snackbar.Snackbar;
 
-public class SettingsFragment extends Fragment {
+public class SettingsFragment extends Fragment implements View.OnClickListener, SeekBar.OnSeekBarChangeListener{
 
     private static float OFFSET = 8.0f * 10; //10 just seems to work
+
+    int new_background_color;
+
+    private View rootView;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        View root = inflater.inflate(R.layout.fragment_settings, container, false);
+        rootView = inflater.inflate(R.layout.fragment_settings, container, false);
 
-        Button cancelBtn = root.findViewById(R.id.settings_cancel_button);
-        //cancelBtn.setOnClickListener(this);
+        Button saveBtn = rootView.findViewById(R.id.settings_save_button);
+        saveBtn.setOnClickListener(this);
 
-        Button saveBtn = root.findViewById(R.id.settings_save_button);
-        //saveBtn.setOnClickListener(this);
+        setGradientSeekBar(R.id.seekbar_color);
 
-        setGradientSeekBar(root, R.id.seekbar_color);
+        SeekBar seekBar = rootView.findViewById(R.id.seekbar_color);
+        seekBar.setOnSeekBarChangeListener(this);
 
-        //SeekBar seekBar = getView().findViewById(R.id.seekbar_color);
-        //seekBar.setOnSeekBarChangeListener(this);
-
-        return root;
+        return rootView;
     }
 
-    private void setGradientSeekBar(View rootView, int id){
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.settings_save_button) {
+            ((PaintActivityDrawer) getActivity()).setBackgroundColor(new_background_color);
+            Snackbar.make(rootView.findViewById(R.id.settings_frag), R.string.back_saved, Snackbar.LENGTH_SHORT)
+                    .show();
+        }
+    }
+
+    private void setGradientSeekBar(int id){
         Display display = getActivity().getWindowManager().getDefaultDisplay();
         Point displaySize = new Point();
         display.getSize(displaySize);
@@ -62,7 +76,7 @@ public class SettingsFragment extends Fragment {
         seekBar.setProgressDrawable(shape);
     }
 
-    /*
+
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         if(fromUser){
@@ -116,16 +130,10 @@ public class SettingsFragment extends Fragment {
                 g = 255;
                 b = 255;
             }
-            if(R.id.pen_color == seekBar.getId()){
-                new_brush_color = Color.argb(255,r,g,b);
-                progress_status = progress;
-            }else{
-                new_background_color = Color.argb(255, r, g, b);
-                progress_status = progress;
-            }
 
+            new_background_color = Color.argb(255, r, g, b);
 
-            ImageView imageViewIcon = (ImageView) findViewById(R.id.back_color_preview);
+            ImageView imageViewIcon = (ImageView) rootView.findViewById(R.id.back_color_preview);
             imageViewIcon.setBackgroundColor(new_background_color);
         }
     }
@@ -136,5 +144,4 @@ public class SettingsFragment extends Fragment {
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {}
 
-     */
 }
