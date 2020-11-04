@@ -105,5 +105,8 @@ public class PaintCanvas extends View implements View.OnTouchListener{
         paint.setStrokeJoin(Paint.Join.ROUND);
     }
 
+    public void changePaintColor(int color){
+        paint.setColor(color);
+    }
 }
 

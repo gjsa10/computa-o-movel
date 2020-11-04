@@ -17,6 +17,8 @@ import com.cm_grupo18.paint.R;
 
 public class PaintFragment extends Fragment {
 
+    private PaintCanvas paintCanvas;
+
     public PaintFragment() {
         // Required empty public constructor
     }
@@ -39,7 +41,7 @@ public class PaintFragment extends Fragment {
 
         int bColor = ((PaintActivityDrawer)getActivity()).getBackgroundColor();
 
-        PaintCanvas paintCanvas = new PaintCanvas(getActivity().getBaseContext(), null, mGestureDetector, bColor);
+        paintCanvas = new PaintCanvas(getActivity().getBaseContext(), null, mGestureDetector, bColor);
         mGestureListener.setCanvas(paintCanvas);
 
         RelativeLayout relativeLayout = rootView.findViewById(R.id.paint_frag_layout);
@@ -47,4 +49,15 @@ public class PaintFragment extends Fragment {
 
         return rootView;
     }
+
+    public void changePaintColor(int color){
+        paintCanvas.changePaintColor(color);
+        paintCanvas.invalidate();
+    }
+
+    public void undoPaint() {
+        paintCanvas.undoPaint();
+        paintCanvas.invalidate();
+    }
+
 }
