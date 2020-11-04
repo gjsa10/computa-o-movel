@@ -11,10 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.cm_grupo18.paint.PaintActivityDrawer;
-import com.cm_grupo18.paint.PaintCanvas;
 import com.cm_grupo18.paint.R;
-import com.google.android.material.snackbar.Snackbar;
 
 public class PaleteFragment extends Fragment implements View.OnClickListener{
 
@@ -63,8 +60,14 @@ public class PaleteFragment extends Fragment implements View.OnClickListener{
         Button purpleBtn = rootView.findViewById(R.id.purple_btn);
         purpleBtn.setOnClickListener(this);
 
-        Button saveBtn = rootView.findViewById(R.id.undo_btn);
-        saveBtn.setOnClickListener(this);
+        Button decBtn = rootView.findViewById(R.id.decrease_size_btn);
+        decBtn.setOnClickListener(this);
+
+        Button incBtn = rootView.findViewById(R.id.increase_size_btn);
+        incBtn.setOnClickListener(this);
+
+        Button eraseBtn = rootView.findViewById(R.id.erase_btn);
+        eraseBtn.setOnClickListener(this);
     }
 
     @Override
@@ -97,8 +100,14 @@ public class PaleteFragment extends Fragment implements View.OnClickListener{
             case R.id.purple_btn:
                 fragm.changePaintColor(Color.argb(255, 125, 0, 255));
                 break;
-            case R.id.undo_btn:
-                fragm.undoPaint();
+            case R.id.decrease_size_btn:
+                fragm.decreasePainSize();
+                break;
+            case R.id.increase_size_btn:
+                fragm.increasePainSize();
+                break;
+            case R.id.erase_btn:
+                fragm.erasePaint();
                 break;
         }
     }

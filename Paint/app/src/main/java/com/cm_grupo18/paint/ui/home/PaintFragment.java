@@ -55,8 +55,18 @@ public class PaintFragment extends Fragment {
         paintCanvas.invalidate();
     }
 
-    public void undoPaint() {
-        paintCanvas.undoPaint();
+    public void erasePaint() {
+        paintCanvas.erase();
+        paintCanvas.invalidate();
+    }
+
+    public void decreasePainSize() {
+        paintCanvas.decreasePaintSize();
+        paintCanvas.invalidate();
+    }
+
+    public void increasePainSize() {
+        paintCanvas.increasePaintSize();
         paintCanvas.invalidate();
     }
 

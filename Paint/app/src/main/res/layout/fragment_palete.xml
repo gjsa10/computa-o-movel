@@ -13,14 +13,15 @@
         android:layout_height="match_parent">
 
         <Button
-            android:id="@+id/undo_btn"
+            android:id="@+id/erase_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Undo"
+            android:text="Erase"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/decrease_size_btn" />
 
         <Button
             android:id="@+id/black_btn"
@@ -35,6 +36,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#FFFFFF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/black_btn"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -51,6 +54,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#FFFF00"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/red_btn"
             app:layout_constraintTop_toBottomOf="@+id/white_btn" />
 
@@ -67,6 +72,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#00FFFF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/green_btn"
             app:layout_constraintTop_toBottomOf="@+id/yellow_btn" />
 
@@ -83,8 +90,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#7D00FF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/blue_btn"
             app:layout_constraintTop_toBottomOf="@+id/cyan_btn" />
+
+        <Button
+            android:id="@+id/decrease_size_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="- Size"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/blue_btn" />
+
+        <Button
+            android:id="@+id/increase_size_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+ Size"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/decrease_size_btn"
+            app:layout_constraintTop_toBottomOf="@+id/purple_btn" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

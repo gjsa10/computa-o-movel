@@ -15,9 +15,11 @@ import java.util.Random;
 
 public class PaintCanvas extends View implements View.OnTouchListener{
 
+    private static final int SIZE_LOW_LIMIT = 10;
+    private static final int SIZE_HIGH_LIMIT = 100;
+
     private Paint paint = new Paint();
-    ArrayList<Path> pathList = new ArrayList<Path>();
-    //private Path path = new Path();
+    private Path path = new Path();
     private int backGroundColor = Color.WHITE;
     private GestureDetector mGestureDetector;
 
@@ -40,10 +42,7 @@ public class PaintCanvas extends View implements View.OnTouchListener{
 
     @Override
     protected void onDraw(Canvas canvas) {
-        //canvas.drawPath(path, paint);// draws the path with the paint
-        for (Path path : pathList) {
-            canvas.drawPath(path, paint);
-        }
+        canvas.drawPath(path, paint);// draws the path with the paint
     }
 
     @Override
@@ -63,12 +62,10 @@ public class PaintCanvas extends View implements View.OnTouchListener{
         float eventY = event.getY();
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                Path newPath = new Path();
-                pathList.add(newPath);
-                pathList.get(pathList.size() - 1).moveTo(eventX, eventY);// updates the path initial point
+                path.moveTo(eventX, eventY);// updates the path initial point
                 return true;
             case MotionEvent.ACTION_MOVE:
-                pathList.get(pathList.size() - 1).lineTo(eventX, eventY);// makes a line to the point each time this event is fired
+                path.lineTo(eventX, eventY);// makes a line to the point each time this event is fired
                 break;
             case MotionEvent.ACTION_UP:// when you lift your finger
                 performClick();
@@ -88,13 +85,8 @@ public class PaintCanvas extends View implements View.OnTouchListener{
         setBackgroundColor(backGroundColor);
     }
 
-    public void undoPaint() {
-        pathList.remove(pathList.size() - 1);
-    }
-
     public void erase(){
-        pathList.clear();
-        //path.reset();
+        path.reset();
     }
 
     private void initPaint(){
@@ -107,6 +99,18 @@ public class PaintCanvas extends View implements View.OnTouchListener{
 
     public void changePaintColor(int color){
         paint.setColor(color);
+    }
+
+    public void decreasePaintSize() {
+        if (paint.getStrokeWidth() > SIZE_LOW_LIMIT){
+            paint.setStrokeWidth(paint.getStrokeWidth() - 10f);
+        }
+    }
+
+    public void increasePaintSize() {
+        if (paint.getStrokeWidth() < SIZE_HIGH_LIMIT){
+            paint.setStrokeWidth(paint.getStrokeWidth() + 10f);
+        }
     }
 }
 
