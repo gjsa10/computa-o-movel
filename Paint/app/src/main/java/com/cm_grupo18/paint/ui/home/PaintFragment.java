@@ -27,6 +27,7 @@ import static android.content.Context.SENSOR_SERVICE;
 public class PaintFragment extends Fragment implements SensorEventListener {
 
     private static final int SHAKE_THRESHOLD = 200;
+    private static final float LUX_THRESHOLD = 10.0f;
 
     private PaintCanvas paintCanvas;
     private SensorManager sensorManager;
@@ -135,7 +136,7 @@ public class PaintFragment extends Fragment implements SensorEventListener {
             }
 
             WindowManager.LayoutParams layoutParams = getActivity().getWindow().getAttributes();
-            layoutParams.screenBrightness = 1.0f; // TODO - this should only take values from 0 to 1
+            layoutParams.screenBrightness = currentReading / LUX_THRESHOLD;
             getActivity().getWindow().setAttributes(layoutParams);
         }
     }
