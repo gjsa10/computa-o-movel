@@ -10,26 +10,32 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class PaintCanvas extends View implements View.OnTouchListener{
 
+    private static final int SIZE_LOW_LIMIT = 10;
+    private static final int SIZE_HIGH_LIMIT = 100;
+
     private Paint paint = new Paint();
     private Path path = new Path();
     private int backGroundColor = Color.WHITE;
-    //private GestureDetector mGestureDetector;
+    private GestureDetector mGestureDetector;
 
     public PaintCanvas(Context context, AttributeSet attrs) {
         super(context, attrs);
         setOnTouchListener(this);
+
         setBackgroundColor(backGroundColor);
         initPaint();
     }
 
-    public PaintCanvas(Context context, AttributeSet attrs, GestureDetector mGestureDetector) {
+    public PaintCanvas(Context context, AttributeSet attrs, GestureDetector mGestureDetector, int bColor) {
         super(context, attrs);
-        //this.mGestureDetector = mGestureDetector;
+        this.mGestureDetector = mGestureDetector;
         setOnTouchListener(this);
+        this.backGroundColor = bColor;
         setBackgroundColor(backGroundColor);
         initPaint();
     }
@@ -46,7 +52,7 @@ public class PaintCanvas extends View implements View.OnTouchListener{
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        //mGestureDetector.onTouchEvent(event);
+        mGestureDetector.onTouchEvent(event);
         return false; // let the event go to the rest of the listeners
     }
 
@@ -80,7 +86,7 @@ public class PaintCanvas extends View implements View.OnTouchListener{
     }
 
     public void erase(){
-        paint.setColor(backGroundColor);
+        path.reset();
     }
 
     private void initPaint(){
@@ -91,5 +97,20 @@ public class PaintCanvas extends View implements View.OnTouchListener{
         paint.setStrokeJoin(Paint.Join.ROUND);
     }
 
+    public void changePaintColor(int color){
+        paint.setColor(color);
+    }
+
+    public void decreasePaintSize() {
+        if (paint.getStrokeWidth() > SIZE_LOW_LIMIT){
+            paint.setStrokeWidth(paint.getStrokeWidth() - 10f);
+        }
+    }
+
+    public void increasePaintSize() {
+        if (paint.getStrokeWidth() < SIZE_HIGH_LIMIT){
+            paint.setStrokeWidth(paint.getStrokeWidth() + 10f);
+        }
+    }
 }
 
