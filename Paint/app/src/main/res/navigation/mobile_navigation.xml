@@ -12,6 +12,12 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
+        android:id="@+id/nav_map"
+        android:name="com.cm_grupo18.paint.ui.map.MapFragment"
+        android:label="@string/menu_map"
+        tools:layout="@layout/fragment_map" />
+
+    <fragment
         android:id="@+id/nav_settings"
         android:name="com.cm_grupo18.paint.ui.settings.SettingsFragment"
         android:label="@string/menu_settings"
