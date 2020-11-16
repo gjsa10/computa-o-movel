@@ -69,6 +69,11 @@ public class MapFragment extends Fragment implements View.OnClickListener, Locat
         drawingBtn.setText("Start Drawing");
         drawingBtn.setOnClickListener(this);
 
+        PaintActivityDrawer pad = (PaintActivityDrawer)getActivity();
+        if (pad != null){
+            pad.hideOptionsMenu();
+        }
+
         return rootView;
     }
 

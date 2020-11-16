@@ -8,6 +8,9 @@
     <string name="nav_header_desc">Paint</string>
 
     <string name="menu_home">Home</string>
+    <string name="menu_save">Save</string>
+    <string name="menu_load">Load</string>
+
     <string name="menu_map">Map</string>
     <string name="menu_settings">Settings</string>
     <string name="menu_about">About</string>

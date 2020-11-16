@@ -3,8 +3,12 @@ package com.cm_grupo18.paint;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
+
+import androidx.annotation.NonNull;
+import androidx.core.view.GravityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -16,6 +20,7 @@ import androidx.appcompat.widget.Toolbar;
 public class PaintActivityDrawer extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
+    private Menu drawerMenu;
     private int backgroundColor = Color.WHITE;
 
     @Override
@@ -40,8 +45,9 @@ public class PaintActivityDrawer extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        drawerMenu = menu;
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.paint_activity_drawer, menu);
+        getMenuInflater().inflate(R.menu.paint_activity_drawer, drawerMenu);
         return true;
     }
 
@@ -59,4 +65,23 @@ public class PaintActivityDrawer extends AppCompatActivity {
     public void setBackgroundColor(int color){
         this.backgroundColor = color;
     }
+
+    public void hideOptionsMenu(){
+        if (drawerMenu != null) {
+            MenuItem item = drawerMenu.findItem(R.id.save_menu);
+            item.setVisible(false);
+            MenuItem item2 = drawerMenu.findItem(R.id.load_menu);
+            item2.setVisible(false);
+        }
+    }
+
+    public void showOptionsMenu(){
+        if (drawerMenu != null) {
+            MenuItem item = drawerMenu.findItem(R.id.save_menu);
+            item.setVisible(true);
+            MenuItem item2 = drawerMenu.findItem(R.id.load_menu);
+            item2.setVisible(true);
+        }
+    }
+
 }

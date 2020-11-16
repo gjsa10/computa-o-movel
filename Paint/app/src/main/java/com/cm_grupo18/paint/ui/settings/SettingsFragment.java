@@ -47,6 +47,11 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
         SeekBar seekBar = rootView.findViewById(R.id.seekbar_color);
         seekBar.setOnSeekBarChangeListener(this);
 
+        PaintActivityDrawer pad = (PaintActivityDrawer)getActivity();
+        if (pad != null){
+            pad.hideOptionsMenu();
+        }
+
         return rootView;
     }
 
