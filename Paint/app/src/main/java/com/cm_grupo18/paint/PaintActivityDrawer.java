@@ -6,9 +6,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
-import androidx.annotation.NonNull;
-import androidx.core.view.GravityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -22,6 +22,8 @@ public class PaintActivityDrawer extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private Menu drawerMenu;
     private int backgroundColor = Color.WHITE;
+
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,8 @@ public class PaintActivityDrawer extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
     }
 
     @Override
@@ -49,6 +53,24 @@ public class PaintActivityDrawer extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.paint_activity_drawer, drawerMenu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.save_menu) {
+
+            System.out.println("ISTO É SAVE");;
+
+            return true;
+        }
+        else if (id == R.id.load_menu) {
+
+            System.out.println("ISTO É LOAD");;
+
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

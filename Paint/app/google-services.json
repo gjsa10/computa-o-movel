@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "813748670458",
+    "firebase_url": "https://paintuniversityproject.firebaseio.com",
+    "project_id": "paintuniversityproject",
+    "storage_bucket": "paintuniversityproject.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:813748670458:android:c5b0bb7803e5ddfb10de43",
+        "android_client_info": {
+          "package_name": "com.cm_grupo18.paint"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "813748670458-3l6906r3mk7vfkc4rb7ca6takdq71hms.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCcj_b8qLw_ot9c_LIi-I7GjIXYuIsY65o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "813748670458-3l6906r3mk7vfkc4rb7ca6takdq71hms.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

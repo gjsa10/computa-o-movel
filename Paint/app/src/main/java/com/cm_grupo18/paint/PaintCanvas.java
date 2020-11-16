@@ -112,5 +112,6 @@ public class PaintCanvas extends View implements View.OnTouchListener{
             paint.setStrokeWidth(paint.getStrokeWidth() + 10f);
         }
     }
+
 }
 
