@@ -20,6 +20,7 @@ import android.widget.RelativeLayout;
 import com.cm_grupo18.paint.GestureListener;
 import com.cm_grupo18.paint.PaintActivityDrawer;
 import com.cm_grupo18.paint.PaintCanvas;
+import com.cm_grupo18.paint.PaintCanvasDTO;
 import com.cm_grupo18.paint.R;
 
 import static android.content.Context.SENSOR_SERVICE;
@@ -144,5 +145,13 @@ public class PaintFragment extends Fragment implements SensorEventListener {
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
+    }
+
+    public PaintCanvasDTO getPaintCanvasDTO(){
+        return paintCanvas.toCanvasDTO();
+    }
+
+    public void setPaintCanvasDTO(PaintCanvasDTO canvasDTO){
+        paintCanvas.convertDTO(canvasDTO);
     }
 }

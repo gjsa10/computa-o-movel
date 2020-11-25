@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
+import android.util.Pair;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -20,13 +21,13 @@ public class PaintCanvas extends View implements View.OnTouchListener{
 
     private Paint paint = new Paint();
     private Path path = new Path();
+    private ArrayList<ArrayList<Pair<Float,Float>>> pathPoints;
     private int backGroundColor = Color.WHITE;
     private GestureDetector mGestureDetector;
 
     public PaintCanvas(Context context, AttributeSet attrs) {
         super(context, attrs);
         setOnTouchListener(this);
-
         setBackgroundColor(backGroundColor);
         initPaint();
     }
@@ -38,6 +39,7 @@ public class PaintCanvas extends View implements View.OnTouchListener{
         this.backGroundColor = bColor;
         setBackgroundColor(backGroundColor);
         initPaint();
+        pathPoints = new ArrayList<>();
     }
 
     @Override
@@ -111,6 +113,22 @@ public class PaintCanvas extends View implements View.OnTouchListener{
         if (paint.getStrokeWidth() < SIZE_HIGH_LIMIT){
             paint.setStrokeWidth(paint.getStrokeWidth() + 10f);
         }
+    }
+
+    public PaintCanvasDTO toCanvasDTO() {
+        PaintCanvasDTO canvasDTO = new PaintCanvasDTO();
+        canvasDTO.setBackgroundColor(backGroundColor);
+
+        return canvasDTO;
+        //TODO - keep reccord of the points, not the path itself, as array of array of points
+    }
+
+    public void convertDTO(PaintCanvasDTO canvasDTO){
+        backGroundColor = canvasDTO.getBackgroundColor();
+
+
+
+        invalidate();
     }
 
 }
