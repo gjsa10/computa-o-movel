@@ -19,4 +19,6 @@
 
     <string name="data_fail">Data Could Not Be Saved!</string>
     <string name="data_success">Data Saved Successfully!</string>
+
+    <string name="data_non_exist">There Is No Saved Data With The Given Name!</string>
 </resources>

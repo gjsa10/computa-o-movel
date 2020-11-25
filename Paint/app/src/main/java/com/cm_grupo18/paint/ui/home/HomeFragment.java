@@ -43,8 +43,15 @@ public class HomeFragment extends Fragment {
         if (fragment == null) {
             return null;
         }
-
         return fragment.getPaintCanvasDTO();
+    }
+
+    public void setPaintCanvasDTO(PaintCanvasDTO canvasDTO){
+        PaintFragment fragment = (PaintFragment) getChildFragmentManager().getFragments().get(0);
+        if (fragment == null) {
+            return;
+        }
+        fragment.setPaintCanvasDTO(canvasDTO);
     }
 
 }

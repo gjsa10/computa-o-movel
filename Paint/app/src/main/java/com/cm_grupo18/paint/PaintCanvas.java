@@ -126,6 +126,10 @@ public class PaintCanvas extends View implements View.OnTouchListener{
     public void convertDTO(PaintCanvasDTO canvasDTO){
         backGroundColor = canvasDTO.getBackgroundColor();
 
+        System.out.println(backGroundColor);
+
+        setBackgroundColor(backGroundColor);
+
 
 
         invalidate();

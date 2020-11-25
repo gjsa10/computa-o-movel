@@ -13,9 +13,11 @@ import com.cm_grupo18.paint.ui.home.HomeFragment;
 import com.cm_grupo18.paint.ui.home.PaintFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -73,20 +75,20 @@ public class PaintActivityDrawer extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.save_menu) {
-            createDialogBoxText();
+            createDialogBoxText(0);
             return true;
         }
         else if (id == R.id.load_menu) {
 
-            // TODO TODO TODO TODO
-            System.out.println("ISTO É LOAD");;
-
+            createDialogBoxText(1);
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void createDialogBoxText(){
+    //mode = 0 is save
+    //mode = 1 is load
+    private void createDialogBoxText(final int mode){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Save Name:");
 
@@ -99,7 +101,12 @@ public class PaintActivityDrawer extends AppCompatActivity {
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                saveCanvas(input.getText().toString());
+                if (mode == 0){
+                    saveCanvas(input.getText().toString());
+                }
+                else if (mode == 1){
+                    loadCanvas(input.getText().toString());
+                }
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -117,9 +124,8 @@ public class PaintActivityDrawer extends AppCompatActivity {
         if (navHostFragment == null){
             return;
         }
-        HomeFragment fragment = (HomeFragment) navHostFragment.getChildFragmentManager().getFragments().get(0);
 
-        //PaintFragment fragment = (PaintFragment) getSupportFragmentManager().findFragmentById(R.id.paint_frag_layout);
+        HomeFragment fragment = (HomeFragment) navHostFragment.getChildFragmentManager().getFragments().get(0);
         if (fragment == null) {
             return;
         }
@@ -141,14 +147,58 @@ public class PaintActivityDrawer extends AppCompatActivity {
         });
     }
 
-    private void loadCanvas(){
+    private void loadCanvas(final String saveName){
+        final boolean[] nameExists = {true};
+
         DatabaseReference databaseRef = refDatabase.child("canvas");
-        //databaseRef.child("nameOfTheSave").exists();
+        databaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (!snapshot.child(saveName).exists()) {
+                    Snackbar.make(findViewById(R.id.paint_fragment), R.string.data_non_exist, Snackbar.LENGTH_SHORT)
+                            .show();
+                    nameExists[0] = false;
+                }
+            }
 
-        //todo - buscar da bd
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
+        });
 
-        PaintFragment fragment = (PaintFragment) getSupportFragmentManager().findFragmentById(R.id.paint_frag_layout);
-        //fragment.setPaintCanvasDTO(/**   CENAS   **/);
+        if (!nameExists[0]){
+            return;
+        }
+
+        DatabaseReference ref = databaseRef.child(saveName);
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                PaintCanvasDTO canvasDTO = new PaintCanvasDTO();
+
+                int background = Integer.parseInt(snapshot.child("background").getValue().toString());
+
+                canvasDTO.setBackgroundColor(background);
+
+                sendCanvasDTO(canvasDTO);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
+        });
+    }
+
+    private void sendCanvasDTO(PaintCanvasDTO canvasDTO){
+        Fragment navHostFragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+        if (navHostFragment == null){
+            return;
+        }
+
+        HomeFragment fragment = (HomeFragment) navHostFragment.getChildFragmentManager().getFragments().get(0);
+        if (fragment == null) {
+            return;
+        }
+
+        fragment.setPaintCanvasDTO(canvasDTO);
     }
 
     @Override
