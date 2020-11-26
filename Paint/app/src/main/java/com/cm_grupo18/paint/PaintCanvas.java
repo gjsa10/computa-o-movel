@@ -12,6 +12,8 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 
 public class PaintCanvas extends View implements View.OnTouchListener{
@@ -21,7 +23,7 @@ public class PaintCanvas extends View implements View.OnTouchListener{
 
     private Paint paint = new Paint();
     private Path path = new Path();
-    private ArrayList<ArrayList<Pair<Float,Float>>> pathPoints;
+    private List<List<List<Float>>> pathPoints;
     private int backGroundColor = Color.WHITE;
     private GestureDetector mGestureDetector;
 
@@ -62,11 +64,32 @@ public class PaintCanvas extends View implements View.OnTouchListener{
     public boolean onTouchEvent(MotionEvent event) {
         float eventX = event.getX();
         float eventY = event.getY();
+
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
+                pathPoints.add(new ArrayList<List<Float>>());
+
+                int mainIndex_down = pathPoints.size() - 1;
+
+                pathPoints.get(mainIndex_down).add(new ArrayList<Float>());
+
+                int secondIndex_down = pathPoints.get(mainIndex_down).size() - 1;
+
+                pathPoints.get(mainIndex_down).get(secondIndex_down).add(eventX);
+                pathPoints.get(mainIndex_down).get(secondIndex_down).add(eventY);
+
                 path.moveTo(eventX, eventY);// updates the path initial point
                 return true;
             case MotionEvent.ACTION_MOVE:
+                int mainIndex_move = pathPoints.size() - 1;
+
+                pathPoints.get(mainIndex_move).add(new ArrayList<Float>());
+
+                int secondIndex_move = pathPoints.get(mainIndex_move).size() - 1;
+
+                pathPoints.get(mainIndex_move).get(secondIndex_move).add(eventX);
+                pathPoints.get(mainIndex_move).get(secondIndex_move).add(eventY);
+
                 path.lineTo(eventX, eventY);// makes a line to the point each time this event is fired
                 break;
             case MotionEvent.ACTION_UP:// when you lift your finger
@@ -118,19 +141,39 @@ public class PaintCanvas extends View implements View.OnTouchListener{
     public PaintCanvasDTO toCanvasDTO() {
         PaintCanvasDTO canvasDTO = new PaintCanvasDTO();
         canvasDTO.setBackgroundColor(backGroundColor);
+        canvasDTO.setPaintColor(paint.getColor());
+        canvasDTO.setPaintStroke(paint.getStrokeWidth());
+        canvasDTO.setPathPoints(pathPoints);
 
         return canvasDTO;
-        //TODO - keep reccord of the points, not the path itself, as array of array of points
     }
 
     public void convertDTO(PaintCanvasDTO canvasDTO){
         backGroundColor = canvasDTO.getBackgroundColor();
 
-        System.out.println(backGroundColor);
-
         setBackgroundColor(backGroundColor);
+        paint.setStrokeWidth(canvasDTO.getPaintStroke());
+        paint.setColor(canvasDTO.getPaintColor());
 
+        for (List<List<Float>> list : canvasDTO.getPathPoints()){
 
+            for (int i = 0; i < list.size(); i ++){
+
+                System.out.println(list.get(i).get(0).floatValue());
+
+                if (i == 0){
+                    float eventX = list.get(i).get(0).floatValue();
+                    float eventY = list.get(i).get(1).floatValue();
+                    path.moveTo(eventX, eventY);
+                }
+                else {
+                    float eventX = list.get(i).get(0).floatValue();
+                    float eventY = list.get(i).get(1).floatValue();
+                    path.lineTo(eventX, eventY);
+                }
+            }
+            performClick();
+        }
 
         invalidate();
     }

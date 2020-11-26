@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -31,7 +32,10 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PaintActivityDrawer extends AppCompatActivity {
 
@@ -176,8 +180,32 @@ public class PaintActivityDrawer extends AppCompatActivity {
                 PaintCanvasDTO canvasDTO = new PaintCanvasDTO();
 
                 int background = Integer.parseInt(snapshot.child("background").getValue().toString());
+                float strokeWidth = Float.parseFloat(snapshot.child("paintStroke").getValue().toString());
+                int paintColor = Integer.parseInt(snapshot.child("paintColor").getValue().toString());
+                List<List<List<Double>>> doublePathPoints =
+                        (List<List<List<Double>>>) snapshot.child("pathPoints").getValue();
 
                 canvasDTO.setBackgroundColor(background);
+                canvasDTO.setPaintStroke(strokeWidth);
+                canvasDTO.setPaintColor(paintColor);
+
+                List<List<List<Float>>> pathPoints = new ArrayList<>();
+
+                for (List<List<Double>> list : doublePathPoints){
+                    pathPoints.add(new ArrayList<List<Float>>());
+
+                    for (List<Double> pair : list){
+                        pathPoints.get(pathPoints.size() - 1).add(new ArrayList<Float>());
+                        pathPoints.get(pathPoints.size() - 1)
+                                .get(pathPoints.get(pathPoints.size() - 1).size() - 1)
+                                .add(pair.get(0).floatValue());
+                        pathPoints.get(pathPoints.size() - 1)
+                                .get(pathPoints.get(pathPoints.size() - 1).size() - 1)
+                                .add(pair.get(1).floatValue());
+                    }
+                }
+
+                canvasDTO.setPathPoints(pathPoints);
 
                 sendCanvasDTO(canvasDTO);
             }
